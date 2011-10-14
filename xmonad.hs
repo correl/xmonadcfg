@@ -1,0 +1,1 @@
+xmonad.standalone.hs
