@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $(task active | wc -l) -le 1 ]; then
+    echo No active tasks
+    exit
+fi
+
+COUNT=$(task active | tail -1 | awk '{print $1}')
+ID=$(task active | tail -n +4 | head -1 | awk '{print $1}')
+
+DESC=$(echo $(task $ID info | grep ^Description | cut -d ' ' -f 2-))
+PROJ=$(echo $(task $ID info | grep ^Project | cut -d ' ' -f 2-))
+TIME=$(echo $(task $ID info | grep 'Total active time' | cut -d ' ' -f 4-))
+
+if [ ! -z "$PROJ" ]; then
+    DESC="[$PROJ] $DESC"
+fi
+
+printf "[1/%d] %s (active for %s)" $COUNT "$DESC" "$TIME"

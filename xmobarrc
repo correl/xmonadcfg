@@ -6,12 +6,13 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
        , commands = [ Run Weather "KNXX" ["-t"," <tempF>F","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Swap [] 10
+                    , Run Swap ["-t", "<usedratio>"] 10
                     , Run Battery ["-L", "15", "-H", "50", "--low", "red", "--high", "green", "--normal", "yellow"] 10
                     , Run Date "%a %b %_d %l:%M" "date" 10
+                    , Run Com "~/.xmonad/taskx" [] "task" 10
                     , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | %battery%    <fc=#ee9a00>%date%</fc> | %KNXX%"
+       , template = "%StdinReader% }{  [%cpu% | %memory%, %swap% | Batt: %battery%]  <fc=yellow>%task%</fc>   <fc=#ee9a00>%date%</fc> | %KNXX%"
        }
